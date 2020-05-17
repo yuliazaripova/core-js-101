@@ -330,11 +330,17 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true
  */
 function isBracketsBalanced(str) {
+  const dic = {
+    '{': '}',
+    '(': ')',
+    '<': '>',
+    '[': ']',
+  };
   const arr = str.split('');
   const stack = [];
 
   arr.forEach((el) => {
-    if (el !== stack[stack.length - 1]) {
+    if (dic[stack[stack.length - 1]] !== el) {
       stack.push(el);
     } else {
       stack.pop();
@@ -382,8 +388,19 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const res = pathes.reduce((x, y) => {
+    const z = [];
+    let j = x;
+    for (let i = 0; i < j.length; i += 1) {
+      if (j[i] === y[i]) {
+        z[i] = j[i];
+      } else break;
+    }
+    j = z.join('');
+    return j;
+  });
+  return res.slice(0, (res.lastIndexOf('/') + 1));
 }
 
 
